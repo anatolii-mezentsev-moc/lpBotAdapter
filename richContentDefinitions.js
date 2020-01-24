@@ -34,11 +34,6 @@ exports.Element = Element;
  * Base class for elements containing tooltip
  */
 class ElementWithTooltip extends Element {
-  constructor(tooltip) {
-    if (tooltip) {
-      this.tooltip = tooltip;
-    }
-  }
 }
 exports.ElementWithTooltip = ElementWithTooltip;
 /**
@@ -48,7 +43,10 @@ exports.ElementWithTooltip = ElementWithTooltip;
  */
 class Button extends ElementWithTooltip {
   constructor(tooltip, title, buttonActions, metadata = null) {
-    super(tooltip);
+    super();
+    if (tooltip) {
+      this.tooltip = tooltip;
+    }
     this.type = "button";
     this.title = title;
     this.click = { actions: buttonActions };
@@ -134,7 +132,10 @@ exports.SimpleTextElement = SimpleTextElement;
  */
 class TextElement extends ElementWithTooltip {
   constructor(text, tooltip, style = {}) {
-    super(tooltip);
+    super();
+    if (tooltip) {
+      this.tooltip = tooltip;
+    }
     this.type = "text";
     this.text = text;
     const keys = Object.keys(style);
@@ -151,7 +152,10 @@ exports.TextElement = TextElement;
  */
 class Image extends ElementWithTooltip {
   constructor(url, tooltip) {
-    super(tooltip);
+    super();
+    if (tooltip) {
+      this.tooltip = tooltip;
+    }
     this.type = "image";
     this.url = url;
   }
