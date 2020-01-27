@@ -154,6 +154,14 @@ class ContentTranslator {
           });
         }
       }
+      const fType = elements[0]["type"];
+      const fElements = elements[0]["elements"];
+      if (fType === "list") {
+        richContent = {
+          type: fType,
+          elements: fElements
+        };
+      }
       event.type = "RichContentEvent";
       event.content = richContent;
     }
@@ -180,7 +188,6 @@ class ContentTranslator {
       event.type = "RichContentEvent";
       event.content = richContent;
     }
-    // HERE
     return event;
   }
   /**
@@ -585,10 +592,20 @@ class ContentTranslator {
         }
       });
     }
-    let richContent = {
-      type: "vertical",
-      elements: elements
-    };
+    let richContent;
+    const fType = elements[0]["type"];
+    const fElements = elements[0]["elements"];
+    if (fType === "list") {
+      richContent = {
+        type: fType,
+        elements: fElements
+      };
+    } else {
+      richContent = {
+        type: "vertical",
+        elements: elements
+      };
+    }
     return richContent;
   }
 }
