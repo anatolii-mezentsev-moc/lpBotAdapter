@@ -345,6 +345,9 @@ class ContentTranslator {
       if (color) {
         style.color = color;
       }
+      if (botFrameworkItem["background-color"]) {
+        style["background-color"] = botFrameworkItem["background-color"];
+      }
       const leText = this.botFrameworkMessageToLivePersonMessage(text);
       elements.push(new RichContentDefinitions.TextElement(leText, "", style));
     } else if (type === RichContentDefinitions.ElementTypes.Image) {
