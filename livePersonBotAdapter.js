@@ -4,6 +4,7 @@ const node_agent_sdk_1 = require("node-agent-sdk");
 const botbuilder_1 = require("botbuilder");
 const contenttranslator_1 = require("./contenttranslator");
 const livepersonagentlistener_1 = require("./livepersonagentlistener");
+const helpers_1 = require("./helpers");
 /**
  * LivePerson bot adapter.
  *
@@ -302,9 +303,10 @@ class LivePersonBotAdapter extends botbuilder_1.BotAdapter {
                         customerId = ctmrInfo.info.customerId || "User";
                     }
                     let event = Object.assign(Object.assign({}, contentEvent), { customerId });
-                    // console.log('\x1b[32m',  `CustomerIdInfo => ${customerId}  ` ,'\x1b[0m');
-                    console.log(event);
-                    this.livePersonAgentListener.onMessage(this, event);
+                    if (!helpers_1.exeptionsList.find(e => e === event.message)) {
+                        console.log(event);
+                        this.livePersonAgentListener.onMessage(this, event);
+                    }
                 });
             });
         });
