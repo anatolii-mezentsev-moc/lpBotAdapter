@@ -351,8 +351,8 @@ class ContentTranslator {
       const leText = this.botFrameworkMessageToLivePersonMessage(text);
       elements.push(new RichContentDefinitions.TextElement(leText, "", style));
     } else if (type === RichContentDefinitions.ElementTypes.Image) {
-      const { url } = botFrameworkItem;
-      elements.push(new RichContentDefinitions.Image(url, ""));
+      const { url, tooltip } = botFrameworkItem;
+      elements.push(new RichContentDefinitions.Image(url, tooltip));
     } else if (type === RichContentDefinitions.ElementTypes.Media) {
       const { poster } = botFrameworkItem;
       if (poster) {
