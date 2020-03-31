@@ -352,7 +352,7 @@ class ContentTranslator {
       elements.push(new RichContentDefinitions.TextElement(leText, "", style));
     } else if (type === RichContentDefinitions.ElementTypes.Image) {
       const { url, tooltip } = botFrameworkItem;
-      elements.push(new RichContentDefinitions.Image(url, tooltip));
+      elements.push(new RichContentDefinitions.Image(url, tooltip ? tooltip : ""));
     } else if (type === RichContentDefinitions.ElementTypes.Media) {
       const { poster } = botFrameworkItem;
       if (poster) {
