@@ -52,6 +52,11 @@ class ContentTranslator {
       sequence: contentEvent.sequence
     });
     //let turnContext = new TurnContext(livePersonBotAdapter, message);
+
+    if (contentEvent.skillId) {
+      turnContext.skillId = contentEvent.skillId;
+    }
+
     return turnContext;
   }
   contentEventToTurnContext(contentEvent, livePersonBotAdapter) {
@@ -75,6 +80,11 @@ class ContentTranslator {
       type: "message",
       multiSelectData: contentEvent.metadata
     });
+
+    if (contentEvent.skillId) {
+      turnContext.skillId = contentEvent.skillId;
+    }
+
     return turnContext;
   }
   /**

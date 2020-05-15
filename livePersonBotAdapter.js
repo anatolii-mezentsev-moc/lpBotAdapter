@@ -202,9 +202,13 @@ class LivePersonBotAdapter extends botbuilder_1.BotAdapter {
         // Notification on changes in the open conversation list
         this.livePersonAgent.on("cqm.ExConversationChangeNotification", notificationBody => {
             notificationBody.changes.forEach(change => {
+                const skillId = change.result.conversationDetails.skillId;
                 if (change.type === "UPSERT" && !openConvs[change.result.convId]) {
+                    // console.log("UPSERT - ", change.result.lastContentEventNotification.event);
                     // new conversation for me
-                    openConvs[change.result.convId] = {};
+                    openConvs[change.result.convId] = {
+                        skillId
+                    };
                     // demonstration of using the consumer profile calls
                     const consumerId = change.result.conversationDetails.participants.filter(p => p.role === "CONSUMER")[0].id;
                     this.livePersonAgent.getUserProfile(consumerId, (e, profileResp) => {
@@ -231,6 +235,7 @@ class LivePersonBotAdapter extends botbuilder_1.BotAdapter {
                         messageSequence = "0";
                     }
                     var contentEvent = {
+                        skillId,
                         dialogId: change.result.convId,
                         sequence: messageSequence,
                         message: "",
@@ -253,6 +258,7 @@ class LivePersonBotAdapter extends botbuilder_1.BotAdapter {
         this.livePersonAgent.on("ms.MessagingEventNotification", body => {
             let consumerId = "";
             const respond = {};
+            // console.log("Messages - ", JSON.stringify(body));
             body.changes.forEach(c => {
                 // In the current version MessagingEventNotification are recived also without subscription
                 // Will be fixed in the next api version. So we have to check if this notification is handled by us.
@@ -263,7 +269,6 @@ class LivePersonBotAdapter extends botbuilder_1.BotAdapter {
                 }
                 if (openConvs[c.dialogId]) {
                     // add to respond list all content event not by me
-                    // console.log(c);
                     if (c.event.type === "ContentEvent" &&
                         c.originatorId !== this.livePersonAgent.agentId) {
                         consumerId = c.originatorId;
@@ -272,7 +277,8 @@ class LivePersonBotAdapter extends botbuilder_1.BotAdapter {
                             sequence: c.sequence,
                             message: c.event.message,
                             metadata: c.metadata,
-                            serverTimestamp: c.serverTimestamp
+                            serverTimestamp: c.serverTimestamp,
+                            skillId: openConvs[c.dialogId].skillId
                         };
                     }
                     // remove from respond list all the messages that were already read
@@ -304,7 +310,6 @@ class LivePersonBotAdapter extends botbuilder_1.BotAdapter {
                     }
                     let event = Object.assign(Object.assign({}, contentEvent), { customerId });
                     if (!helpers_1.exeptionsList.find(e => e === event.message)) {
-                        console.log(event);
                         this.livePersonAgentListener.onMessage(this, event);
                     }
                 });
