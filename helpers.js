@@ -67,7 +67,5 @@ exports.strCutter = (str, n = 20) => {
     }
     return str.slice(0, n - 3) + "...";
 };
-exports.exeptionsList = [
-    "We now offer messaging, which means you can correspond with us at your convenience during this conversation. Virtual Agent STAGE will be with you shortly.",
-];
+
 //# sourceMappingURL=helpers.js.map
