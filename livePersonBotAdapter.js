@@ -245,7 +245,7 @@ class LivePersonBotAdapter extends botbuilder_1.BotAdapter {
                     this.livePersonAgent.subscribeMessagingEvents({
                         dialogId: change.result.convId,
                         skillId: change.result.conversationDetails,
-                        fromSeq: 999999999999999999999999
+                        fromSeq: 999
                     });
                 }
                 else if (change.type === "DELETE") {
