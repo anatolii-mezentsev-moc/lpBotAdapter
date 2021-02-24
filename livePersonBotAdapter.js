@@ -165,7 +165,7 @@ class LivePersonBotAdapter extends botbuilder_1.BotAdapter {
                 this.livePersonAgent.getClock({}, (e, resp) => {
                     console.log("\x1b[36m", "ping", "\x1b[0m");
                     if (e) {
-                        console.log('\x1b[31m', 'Error :: ', JSON.stringify(e), '\x1b[0m');
+                        console.log('\x1b[31m', 'Error :: ', e, JSON.stringify(e), '\x1b[0m');
                         clearTimeout(this.livePersonAgent._retryConnection);
                         this.livePersonAgent._reconnect();
                     }
@@ -322,7 +322,7 @@ class LivePersonBotAdapter extends botbuilder_1.BotAdapter {
         console.error(`LivePerson bot adapter error: ${error}`);
     }
     handleSocketError(err) {
-        console.log('\x1b[31m', 'Error :: ', JSON.stringify(err), '\x1b[0m');
+        console.log('\x1b[31m', 'Error :: ',e, JSON.stringify(err), '\x1b[0m');
         if (err && err.code === 401) {
             console.log(":: SOCKET ERR - TRYING TO RECONNECT");
             this.livePersonAgent._reconnect();
