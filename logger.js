@@ -20,3 +20,4 @@ module.exports = (name = '', conf = { base: null }) => {
 
   return log;
 };
+console.log('Logger initialized with options:')
